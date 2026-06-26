@@ -3,4 +3,5 @@ build/
 *.dll
 *.obj
 *.log
-estructura.txt
+t2.ini
+t3.ini
