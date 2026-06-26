@@ -1,4 +1,4 @@
-# Godfather Discord Rich Presence
+# The Godfather Discord Rich Presence
 
 Discord Rich Presence for **The Godfather: The Game** (PC, EA, 2006) — including the Spanish edition *El Padrino*.
 
