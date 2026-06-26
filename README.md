@@ -1,5 +1,7 @@
 # The Godfather Discord Rich Presence
 
+![Example](https://i.imgur.com/5rHS8wF.png)
+
 Discord Rich Presence for **The Godfather: The Game** (PC, EA, 2006) — including the Spanish edition *El Padrino*.
 
 It's a native `.asi` plugin (32-bit DLL) that loads automatically when you start the game and displays your Discord profile with the status text.
