@@ -1,0 +1,5 @@
+build/
+*.asi
+*.dll
+*.obj
+*.log
