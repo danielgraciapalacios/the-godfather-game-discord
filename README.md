@@ -1,60 +1,65 @@
 # Godfather Discord Rich Presence
 
-Discord Rich Presence para **The Godfather: The Game** (PC, EA, 2006) — incluida la edición
-española *El Padrino*.
+Discord Rich Presence for **The Godfather: The Game** (PC, EA, 2006) — including the Spanish edition *El Padrino*.
 
-Es un plugin `.asi` nativo (DLL de 32 bits) que se carga automáticamente al arrancar el
-juego y muestra en tu perfil de Discord que estás jugando, junto con un texto de estado.
+It's a native `.asi` plugin (32-bit DLL) that loads automatically when you start the game and displays your Discord profile with the status text.
 
-![estado en Discord](https://img.shields.io/badge/Discord-Rich%20Presence-5865F2?logo=discord&logoColor=white)
-![plataforma](https://img.shields.io/badge/plataforma-Windows%20x86-blue)
-![licencia](https://img.shields.io/badge/licencia-MIT-green)
+![Discord status](https://img.shields.io/badge/Discord-Rich%20Presence-5865F2?logo=discord&logoColor=white)
+![Platform](https://img.shields.io/badge/plataforma-Windows%20x86-blue)
+![License](https://img.shields.io/badge/licencia-MIT-green)
 
 ---
 
-## ¿Qué muestra?
+## What does it show?
 
-En tu perfil de Discord aparece **"Jugando a El Padrino"** con:
 
-- Una línea de estado (actualmente fija: **"Nueva York"**).
-- El tiempo de sesión transcurrido (lo cuenta Discord automáticamente).
+Your Discord profile will display **"Playing The Godfather"** with:
 
-> **Estado del proyecto:** versión básica funcional. La detección del **barrio/distrito
-> concreto** (Hell's Kitchen, Brooklyn, SoHo, …) leyendo la memoria del juego está
-> planificada como fase posterior. Ver [docs/](docs/).
+- A status line (currently static: **"New York"**).
 
----
+- The elapsed session time (automatically tracked by Discord).
 
-## Requisitos
+> **Project status:** functional basic version. Detecting the specific **neighborhood/district** (Hell's Kitchen, Brooklyn, SoHo, etc.) by reading the game's memory is
+> planned as a later phase. See [docs/](docs/).
 
-- **Windows** (el juego es x86 de 2006).
-- **Discord de escritorio** abierto y con sesión iniciada.
-- El juego con el **[Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader)**
-  instalado (normalmente presente como `dinput8.dll` en la raíz del juego). Es lo que carga
-  los plugins `.asi`. Muchas instalaciones modernas (con SilentPatch, WidescreenFix, etc.)
-  ya lo tienen.
+--
 
----
+## Requirements
 
-## Instalación (para usuarios)
+- **Windows** (the game is x86 from 2006).
 
-1. Descarga `GodfatherDiscordRPC.asi` (de la sección *Releases*, o compílalo — ver abajo).
-2. Cópialo a la carpeta `scripts\` de tu instalación del juego, junto a los otros `.asi`
-   (p. ej. `C:\The Godfather\scripts\`).
-3. *(Opcional)* copia también `GodfatherDiscordRPC.ini` a esa misma carpeta si quieres
-   personalizar el texto o usar tu propio Client ID de Discord.
-4. Abre Discord y arranca el juego. ¡Listo!
+- **Discord desktop** open and logged in.
 
-**Ficheros necesarios en `scripts\`:**
-
-| Fichero | Imprescindible | Para qué |
-|---|---|---|
-| `GodfatherDiscordRPC.asi` | Sí | El plugin |
-| `GodfatherDiscordRPC.ini` | Opcional | Personalización; sin él se usan los valores por defecto |
+- The game with the **[Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader)** installed (usually found as `dinput8.dll` in the game's root directory). This is what loads
+the `.asi` plugins. Many modern installations (with SilentPatch, WidescreenFix, etc.) already have it.
 
 ---
 
-## Configuración (`GodfatherDiscordRPC.ini`)
+## Installation (for users)
+
+1. Download `GodfatherDiscordRPC.asi` (from the *Releases* section, or compile it — see below).
+
+2. Copy it to the `scripts\` folder of your game installation, along with the other `.asi` files
+
+(e.g., `C:\The Godfather\scripts\`).
+
+3. *(Optional)* also copy `GodfatherDiscordRPC.ini` to the same folder if you want to customize the text or use your own Discord Client ID.
+
+4. Open Discord and launch the game. Done!
+
+**Required files in `scripts\`:**
+
+| File | Required | Purpose |
+
+---|---|---|
+
+| `GodfatherDiscordRPC.asi` | Yes | The plugin |
+
+`GodfatherDiscordRPC.ini` | Optional | Customization; without it, default values ​​are used |
+
+---
+
+## Configuration (`GodfatherDiscordRPC.ini`)
 
 ```ini
 [Discord]
@@ -62,74 +67,74 @@ client_id = 1520195420398289017
 
 [Settings]
 poll_interval_ms = 2000
-state = Nueva York
+state = New York
 ```
 
-- `client_id`: ID de la aplicación de Discord. Crea la tuya en el
-  [Discord Developer Portal](https://discord.com/developers/applications) si quieres que
-  aparezca con tu propio nombre tras "Jugando a…".
-- `poll_interval_ms`: cada cuánto comprueba el estado / reintenta conexión.
-- `state`: el texto de estado mostrado.
+- `client_id`: Discord application ID. Create your own in the
 
-Si el `.ini` falta o una clave está vacía, se usan los valores por defecto compilados.
+[Discord Developer Portal](https://discord.com/developers/applications) if you want it to appear with your own name after "Playing...".
+
+- `poll_interval_ms`: How often it checks the status/retries the connection.
+
+- `state`: The displayed status text.
+
+If the `.ini` file is missing or a key is empty, the compiled default values ​​are used.
 
 ---
 
-## Compilar desde el código fuente
+## Compile from source code
 
-Necesitas **Visual Studio Build Tools 2022** (workload C++ con target x86) y **CMake**.
+You need **Visual Studio Build Tools 2022** (C++ workflow with x86 target) and **CMake**.
 
-```powershell
-# Forma rápida (usa el script incluido)
+``powershell
+# Quick way (use the included script)
 .\build.cmd
 
-# Ejecutar los tests
+# Run the tests
 .\build.cmd test
 ```
 
-O manualmente, desde un *Developer Command Prompt for VS 2022* en arquitectura x86:
+Or manually, from a *Developer Command Prompt for VS 2022* on x86 architecture:
 
 ```powershell
-cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
-cmake --build build
+`cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release`
+`cmake --build build`
 ```
 
-El resultado es `build\GodfatherDiscordRPC.asi` (DLL de 32 bits).
+The result is `build\GodfatherDiscordRPC.asi` (32-bit DLL).
+
+` ... ---
+
+## How it works
+
+- The plugin is injected into `godfather.exe` via the Ultimate ASI Loader.
+
+- It launches a background thread that connects to Discord using its local IPC (named pipe `\\.\pipe\discord-ipc-N`), performs the handshake, and sends the activity (`SET_ACTIVITY`). No SDK or external dependencies are required.
+
+- If Discord is not open, it periodically re-tries the connection without interfering with the game.
+
+- All operations are isolated to ensure they never affect game stability.
+
+It generates a diagnostic log in `GodfatherDiscordRPC.log`, along with the `.asi` file.
 
 ---
 
-## Cómo funciona
-
-- El plugin se inyecta en `godfather.exe` a través del Ultimate ASI Loader.
-- Lanza un hilo en segundo plano que se conecta a Discord mediante su **IPC local**
-  (named pipe `\\.\pipe\discord-ipc-N`), hace el handshake y envía la actividad
-  (`SET_ACTIVITY`). Sin SDK ni dependencias externas.
-- Si Discord no está abierto, reintenta la conexión periódicamente sin molestar al juego.
-- Todas las operaciones están aisladas para no afectar nunca a la estabilidad del juego.
-
-Genera un log de diagnóstico en `GodfatherDiscordRPC.log`, junto al `.asi`.
-
----
-
-## Estructura del proyecto
+## Project Structure
 
 ```
-src/          Código fuente C++ (Logger, Config, DiscordIPC, dllmain)
-test/         Tests: unit_tests (lógica) + ipc_host_test (Discord sin el juego)
-dist/         GodfatherDiscordRPC.ini de ejemplo
-docs/         Diseño y plan de implementación
-build.cmd     Script de compilación x86
+src/ C++ Source Code (Logger, Config, DiscordIPC, dllmain)
+test/ Tests: unit_tests (logic) + ipc_host_test (Discord without the game)
+dist/ Example GodfatherDiscordRPC.ini
+docs/ Design and Implementation Plan
+build.cmd x86 Build Script
 ```
 
 ---
 
-## Aviso legal
+## Legal Notice
 
-Proyecto **no oficial**, sin relación con Electronic Arts ni con los titulares de la marca
-*The Godfather* / *El Padrino*. "The Godfather" es una marca de sus respectivos
-propietarios. Este software solo añade integración con Discord y no incluye ni distribuye
-ningún recurso del juego.
+This is an **unofficial** project, with no affiliation with Electronic Arts or the owners of the trademark *The Godfather*. "The Godfather" is a trademark of its respective owners. This software only adds Discord integration and does not include or distribute any game resources.
 
-## Licencia
+## License
 
 [MIT](LICENSE).
